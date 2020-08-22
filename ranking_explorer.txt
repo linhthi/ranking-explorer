@@ -1,0 +1,54 @@
+1. Post is stored by a db mysql/redis/cassandra
+class post:
+	id:TEXT,
+	user_id:INTEGER,
+	content:TEXT,
+	media:TEXT, link to the video/img
+	create_time:INTEGER
+	target: TEXT
+
+query = "SELECT * FROM post WHERE id IN %s"
+
+2. Each ranking output is in the form of, see in the example
+
+feed_ranking_message:
+	user_id: int
+	request_timestamp: int
+	response_timestap: int
+	treatment: text	
+	provider: text	
+	existing_ids: list of post id
+	feeds: list of feed item json with scores. Each items in
+		'id': text
+		't': time score function (important)
+		'from': text
+	ranking_metadata: json
+
+Task 1: 
+Create a sql or redis or cassandra table represent the post object with the post id is given by the example.json
+The data could be random (except the source in the post should match with the source in the example.json)
+
+Task 2:
+    Create a web pages which loads the output from example.json and display the ranking to the web
+
+Task 3:
+Random generate more data into the post table, and 
+create a sql table for storing random ranking output like in example.json
+
+Task 4:
+Add filter to the UI
+user_id
+feeds per pages
+filter on request_timestamp: give a timestamp, display the nearest request to the timestamp (<=T)
+
+Task 5:
+Create a tracking logs, given the data is generated
+
+lib: flask & pivottablejs pandas(sql),
+c3.js
+adminlte.io
+pyodbc.
+pydashie
+
+
+

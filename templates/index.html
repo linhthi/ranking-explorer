@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script>
+        function createNode(element) {
+            return document.createElement(element); // Create the type of element you pass in the parameters
+        }
+
+        function append(parent, el) {
+            return parent.appendChild(el); // Append the second parameter(element) to the first one
+        }
+
+        
+        function myFunc() {
+            const ul = document.getElementById("posts");
+            fetch('/posts')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    let posts = data.posts
+                    posts.map(post => {
+                        let li = createNode('li')
+                        id = createNode('div')
+                        content = createNode('div')
+                        img = createNode('img')
+                        id.innerText = post.id
+                        content.innerText = post.content
+                        img.src = post.media
+                        img.width = "300"
+                        li.style.backgroundColor = "lightblue"
+
+                        append(li, id)
+                        append(li, content)
+                        append(li, img)
+                        append(ul, li) 
+                    });
+                }).catch(err => {
+                    console.log('Error', err)
+                })
+
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button onclick="myFunc()">Click</button>
+        <ul id="posts" style="list-style-type:none;"></ul>
+    </div>
+</body>
+</html>

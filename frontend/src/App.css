@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -37,7 +38,9 @@
   }
 }
 
-.card {}
+div {
+  overflow: hidden;
+}
 
 .card {
     height: 100%;
@@ -69,15 +72,42 @@ li {
 .leftCol {
     background-color: #6495ED;
     height: 100vh;
+    overflow-y: scroll;
 }
 
 .rightCol {
+}
+
+.text-1{
+  font-size: 1rem;
+}
+
+.text-12{
+  font-size: 1.2rem;
+}
+
+.center{
+  justify-content: center;
+  align-items: center;
+}
+
+.center-horizontal{
+  justify-content: center;
+}
+
+.center-vertical{
+  align-items: center;
+}
+
+.flex{
+  display: flex;
 }
 
 .center {
     margin: 10px;
     text-align: center;
 }
+
 
 img.imgProfile {
   width: 30px;
@@ -92,6 +122,20 @@ img {
 .post {
   border: 1px solid LightGray;
   margin-bottom: 20px;
+}
+
+.back {
+  color: black;
+}
+
+.inline {
+  display: inline;
+}
+
+.time {
+  color: gray;
+  font-size: 12px;
+  margin-left: 10px;
 }
 
 

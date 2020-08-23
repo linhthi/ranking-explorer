@@ -1,51 +1,51 @@
 import React, {useEffect, useState} from 'react';
-//import Slider from '../../components/Slider';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Post from '../../components/Post';
+import Post from '../components/Post';
 import {Form, FormControl, Button} from 'react-bootstrap';
-// import FormFillter from '../../components/FormFillter';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import axios from 'axios';
-import {useAppContext} from '../../ContextApp/useContextApp';
 
 function HomePage() {
-    const { updateFeed } = useAppContext();
     
     useEffect(() => {
         fetchRankingFeeds();
     }, []);
 
     const [listFeeds, setListFeed] = useState([]);
+
+    /***
+     * user_id, timestamp: to filter list ranking
+     * listFiltered: to store a list that filtered
+     */
     const [user_id, setUser_id] = useState("");
     const [timestamp, setTimestamp] = useState("");
     const [listFiltered, setListFiltered] = useState([]);
-    const getAllFeedUrl = '/ranking_feeds';
 
+    // Get ranking feed without filter
+    const getAllFeedUrl = '/ranking_feeds';
     const fetchRankingFeeds = () => {
         axios.get(getAllFeedUrl)
             .then(res => {
                 const feeds = res.data.ranking_feeds;
                 setListFeed(feeds);
                 setListFiltered(feeds);
-                updateFeed(feeds);
             });
     }
 
-    function viewDetailList() {
-        
-    }
-
+    // Take user_id from input form
     const handleOnchangeUserid = event => {
         setUser_id(event.target.value);
     }
 
+    // Take timestamp input from form
     const handleOnchangeTimestamp = event => {
         setTimestamp(event.target.value)
     }
     
+    // Filter ranking
     const filter = () => {
+
         if (user_id != "" || timestamp != "") {
             const reslult = listFeeds.filter(feed => {
                 if (feed.user_id == user_id || feed.request_timestamp <= parseInt(timestamp)) {
@@ -81,7 +81,7 @@ function HomePage() {
                                 <Form.Label srOnly>
                                     Username
                                 </Form.Label>
-                                <FormControl placeholder="req_timestamp" onChange={handleOnchangeTimestamp}/>
+                                <FormControl placeholder="req_timestamp" onChange={handleOnchangeTimestamp } onKeyDown={filter}/>
                             </Col>
 
                             <Col xs="auto" className="my-1">
@@ -93,23 +93,29 @@ function HomePage() {
                     
                     {/* List the list ranking random */}
                     <ul >
-                     {listFiltered.map((feeds, idx) => (
-                        <div key={idx.toString()}>
+                    {listFiltered.map((feeds, idx) => (
+                        
+                        <li key={idx}>
                             <Link to={`/list_feed/${feeds.user_id}/${feeds.request_timestamp}`} >
-                                <a onClick={viewDetailList}>
-                                    <li style={{color: 'black'}}>
-                                        <div>User:{feeds.user_id}, request_timestamp:{feeds.request_timestamp}</div>
-                                    </li>
-                                </a>
+                                <div className="back">
+                                    User:{feeds.user_id}, request_timestamp:{feeds.request_timestamp}
+                                </div>
                             </Link>
-                        </div>
-                     ))}
+                        </li>
+                    ))}
                      </ul>
+                    {/* End of the list ranking */}
                </Col>
+
+               {/* Right Column to dislay list feed */}
                <Col sm={7} className="rightCol">
                    <h4 className="center">List feeds</h4>
-                    <Route path="/list_feed/:id/:timestamp" component={Post} />
+                   {/* Route to post list detail */}
+                    <Route path="/list_feed/:id/:timestamp" render={(props) => (
+                        <Post key={props.match.params.id} {...props} />)}
+                   />
                </Col>
+               {/* End of the right column */}
                <Col sm={1}></Col>
            </Row>
         </Router>

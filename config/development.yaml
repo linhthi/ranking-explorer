@@ -1,0 +1,5 @@
+mysql.host    : "db"
+mysql.port    : 3306
+mysql.database: "ranking"
+mysql.username: "linh"
+mysql.password: "12345678"

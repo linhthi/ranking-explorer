@@ -1,0 +1,50 @@
+version: "2.0"
+services:
+  app:
+    container_name: flask-server
+    build: ./
+    command: python app.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/todo
+    depends_on:
+      - db
+  
+  front-end:
+    container_name: reactimage
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/src'
+      - '/src/node_modules'
+    ports:
+      - 3000:3000
+    links:
+      - app
+    command: npm start
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'ranking'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'linh'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: '12345678'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: ''
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3307:3307'
+    expose:
+      # Opens port 3307 on the container
+      - '3307'
+      # Where our data will be persisted
+    volumes:
+      - my-db:/var/lib/mysql
+# Names our volume
+volumes:
+  my-db:

@@ -63,3 +63,4 @@ typings/
 # Virtual enviroment
 myenv/
 .idea/
+__pycache__/

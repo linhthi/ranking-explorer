@@ -2,7 +2,7 @@ import os
 import yaml
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-with open('./config/development.yaml') as f:
+with open('./config/test.yaml') as f:
     data = yaml.load(f, Loader=yaml.FullLoader)
 
 MYSQL_DATABASE = data.get('mysql.database')

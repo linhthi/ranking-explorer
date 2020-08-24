@@ -14,8 +14,6 @@ jsonschema==3.2.0
 MarkupSafe==1.1.1
 marshmallow==3.7.1
 marshmallow-sqlalchemy==0.23.1
-openapi-spec-validator==0.2.9
-protobuf==3.12.4
 PyMySQL==0.10.0
 pyrsistent==0.16.0
 PyYAML==5.3.1

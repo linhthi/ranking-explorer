@@ -14,5 +14,9 @@ from app.api.ranking_api import ranking_api
 app.register_blueprint(post_api)
 app.register_blueprint(ranking_api)
 
+@app.route('/')
+def int():
+    return 'Hello, World!'
+
 db.create_all()
 

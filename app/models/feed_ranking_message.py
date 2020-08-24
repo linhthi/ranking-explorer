@@ -6,8 +6,8 @@ class Feed_Ranking_Message(db.Model):
     __tablename__ = "feed_ranking_messages"
     id = db.Column(db.Integer, primary_key= True, autoincrement=True)
     user_id = db.Column(db.String(15))
-    request_timestamp = db.Column(db.String(10))
-    response_timetamp = db.Column(db.String(10))
+    request_timestamp = db.Column(db.String(13))
+    response_timestamp = db.Column(db.String(13))
     treatment = db.Column(db.Text)
     provider = db.Column(db.Text)
     existing_ids = db.Column(db.Text)
@@ -19,11 +19,10 @@ class Feed_Ranking_Message(db.Model):
         db.session.commit()
         return self
         
-    def __init__(self, id, user_id, request_timestamp, response_timetamp, treatment, provider, existing_ids, feeds, ranking_metatadata):
-        self.id = id
+    def __init__(self, user_id, request_timestamp, response_timestamp, treatment, provider, existing_ids, feeds, ranking_metatadata):
         self.user_id = user_id
         self.request_timestamp = request_timestamp
-        self.response_timestamp = response_timetamp
+        self.response_timestamp = response_timestamp
         self.treatment = treatment
         self.provider = provider
         self.existing_ids = existing_ids

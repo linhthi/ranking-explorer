@@ -8,6 +8,7 @@ class FeedRankingMessageSchema(ModelSchema):
         model = Feed_Ranking_Message
         sqla_session = db.session
 
+    id = fields.Integer(dump_only=True)
     user_id = fields.String(required=True)
     request_timestamp = fields.String(required=True)
     response_timestamp = fields.String(required=True)

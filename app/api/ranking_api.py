@@ -32,6 +32,7 @@ def get_ranking_feed():
 @ranking_api.route('/ranking_feeds', methods = ['POST'])
 def create_ranking_feed():
     """ Create a ranking feed """
+    
     data = request.get_json()
     ranking_schema = FeedRankingMessageSchema()
     ranking = ranking_schema.load(data)

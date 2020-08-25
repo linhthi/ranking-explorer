@@ -11,8 +11,12 @@ MYSQL_USER = data.get('mysql.username')
 MYSQL_PASSWORD = data.get('mysql.password')
 MYSQL_PORT = data.get('mysql.port')
 
+# class Config(object):
+#     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{0}:{1}@{2}:{3}/{4}'.format(
+#         MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE
+#     )
+#     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{0}:{1}@{2}:{3}/{4}'.format(
-        MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE
-    )
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///ranking.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

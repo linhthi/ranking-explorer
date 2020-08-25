@@ -7,9 +7,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - .:/todo
-    depends_on:
-      - db
+      - .:/code
   
   front-end:
     container_name: reactimage
@@ -24,22 +22,3 @@ services:
     links:
       - app
     command: npm start
-
-  db:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'ranking'
-      MYSQL_USER: 'linh'
-      MYSQL_PASSWORD: '12345678'
-      MYSQL_ROOT_PASSWORD: '12345678'
-    ports:
-      - '3307:3307'
-    expose:
-      - '3307'
-    volumes:
-      - ./mysql-dump:/docker-entrypoint-initdb.d
-      - my-db:/var/lib/mysql
-# Names our volume
-volumes:
-  my-db:

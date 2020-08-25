@@ -9,6 +9,9 @@ post_api = Blueprint('posts', __name__)
 def get_all_post():
     """ Get all post """
 
+    # page_number = request.args.get('page')
+    # page_size = request.args.get('offset')
+
     get_posts = Post.query.all()
     post_schema = PostSchema(many=True)
     posts = post_schema.dump(get_posts)
@@ -27,7 +30,7 @@ def get_post_by_id(id):
 
 @post_api.route('/posts/<id>', methods = ['DELETE'])
 def delete_post_by_id(id):
-    """ This func tion to delete a post with id """
+    """ This function to delete a post with id """
 
     get_post = Post.query.get(id)
     db.session.delete(get_post)

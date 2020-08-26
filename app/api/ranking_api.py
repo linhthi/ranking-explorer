@@ -25,6 +25,22 @@ def get_feeds_by_user_id(user_id):
     return make_response(jsonify({'feeds': feeds}), 200)
 
 
+@ranking_api.route('/list_feeds/<user_id>/<req_ts>', methods = ['GET'])
+def get_feeds_by_user_id_and_ts(user_id, req_ts):
+    """ Get feeds by user_id and request timestamp """
+
+
+    rankings = get_all_ranking()
+
+    user_feed = [user_feed for user_feed in rankings if (user_feed['user_id'] == user_id and user_feed['request_timestamp'] == req_ts)]
+    if len(user_feed) == 0:
+        return make_response(jsonify({'message': 'not found'}), 404)
+
+    feeds_string = user_feed[0]['feeds']
+    feeds = json.loads(feeds_string)
+    return make_response(jsonify({'feeds': feeds}), 200)
+
+
 @ranking_api.route('/ranking_feeds/user/<user_id>', methods = ['GET'])
 def get_ranking_feeds_by_user_id(user_id):
     """ Get feeds by userId """

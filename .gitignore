@@ -64,3 +64,4 @@ typings/
 myenv/
 .idea/
 __pycache__/
+*.pyc

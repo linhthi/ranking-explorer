@@ -8,7 +8,7 @@ function App() {
   return (
     <Router>
       <AppProvider>
-      <div>
+      <div className="main">
         <Route path="/list_feed/:id/:timestamp" component={HomePage} />
         <Route path="/" exact component={HomePage} />
         <Route path="/index.html" component={HomePage} />

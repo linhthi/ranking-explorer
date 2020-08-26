@@ -5,7 +5,7 @@ function Post({match}) {
 
     useEffect(() => {
         const fetchFeeds = () => {
-            let getAllFeedUrl = `/list_feed/user/${match.params.id}`;
+            let getAllFeedUrl = `/list_feeds/${match.params.user_id}/${match.params.req_ts}`;
             setListResult([]);
             setIsDone(false);
             axios.get(getAllFeedUrl)

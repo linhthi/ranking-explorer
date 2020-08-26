@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Post from '../components/Post';
@@ -36,6 +37,7 @@ function HomePage() {
     // Take user_id from input form
     const handleOnchangeUserid = event => {
         setUser_id(event.target.value);
+        
     }
 
     // Take timestamp input from form
@@ -46,7 +48,15 @@ function HomePage() {
     // Filter ranking
     const filter = () => {
 
-        if (user_id != "" || timestamp != "") {
+        if (user_id != "" && timestamp != "") {
+            const reslult = listFeeds.filter(feed => {
+                if (feed.user_id.toLowerCase().includes(user_id) && feed.request_timestamp <= parseInt(timestamp)) {
+                    return feed;
+                }
+            })
+            setListFiltered(reslult);
+        }
+        else if (user_id != "" || timestamp != "") {
             const reslult = listFeeds.filter(feed => {
                 if (feed.user_id == user_id || feed.request_timestamp <= parseInt(timestamp)) {
                     return feed;
@@ -58,9 +68,14 @@ function HomePage() {
             window.location.href='/';
         }
     }
+    useEffect(() => {
+        const filltered_by_id = listFeeds.filter(feed => feed.user_id.toLowerCase().includes(user_id));
+        setListFiltered(filltered_by_id);
+    }, [user_id]);
 
 
     return(
+        <Container>
         <Router>
             <Row>
                <Col sm={4} className="leftCol">
@@ -81,7 +96,7 @@ function HomePage() {
                                 <Form.Label srOnly>
                                     Username
                                 </Form.Label>
-                                <FormControl placeholder="req_timestamp" onChange={handleOnchangeTimestamp } onKeyDown={filter}/>
+                                <FormControl placeholder="req_timestamp" onChange={handleOnchangeTimestamp } />
                             </Col>
 
                             <Col xs="auto" className="my-1">
@@ -96,9 +111,9 @@ function HomePage() {
                     {listFiltered.map((feeds, idx) => (
                         
                         <li key={idx}>
-                            <Link to={`/list_feed/${feeds.user_id}/${feeds.request_timestamp}`} >
+                            <Link to={`/list_feed/${feeds.id}/${feeds.user_id}/${feeds.request_timestamp}`} >
                                 <div className="back">
-                                    User:{feeds.user_id}, request_timestamp:{feeds.request_timestamp}
+                                    user:{feeds.user_id}, req_tp:{feeds.request_timestamp}
                                 </div>
                             </Link>
                         </li>
@@ -108,17 +123,18 @@ function HomePage() {
                </Col>
 
                {/* Right Column to dislay list feed */}
-               <Col sm={7} className="rightCol">
+               <Col sm={8} className="rightCol">
                    <h4 className="center">List feeds</h4>
                    {/* Route to post list detail */}
-                    <Route path="/list_feed/:id/:timestamp" render={(props) => (
+                    <Route path="/list_feed/:id/:user_id/:req_ts" render={(props) => (
                         <Post key={props.match.params.id} {...props} />)}
                    />
                </Col>
                {/* End of the right column */}
-               <Col sm={1}></Col>
+               {/* <Col sm={1}></Col> */}
            </Row>
         </Router>
+        </Container>
     )
 }
 

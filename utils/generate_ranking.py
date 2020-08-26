@@ -25,7 +25,7 @@ def genarate_ranking_feeds():
         cr = 0.01
         p = 6.000
         t = 10.00
-        if post.get(user_id) == user_id:
+        if post.get('user_id') == user_id:
             existing_list.append(post_id)
             feed = {
                 "id": post_id,
@@ -61,4 +61,6 @@ def genarate_ranking_feeds():
 
 
 if __name__ == '__main__':
-    genarate_ranking_feeds()
+    number_req_ranking = 100
+    for _ in range(number_req_ranking):
+        genarate_ranking_feeds()
